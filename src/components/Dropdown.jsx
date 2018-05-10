@@ -58,7 +58,7 @@ class Dropdown extends Component {
 
   _onWindowClick (event) {
     const dropdownElement = findDOMNode(this);
-    if (event.target !== dropdownElement && !dropdownElement.contains(event.target) && this.isActive()) {
+    if (event.target !== dropdownElement && !dropdownElement.contains(event.target) && this.isActive() && this.props.hideOnClickOutside(event)) {
       this.hide();
     }
   }
@@ -106,6 +106,7 @@ class Dropdown extends Component {
     delete cleanProps.onShow;
     delete cleanProps.onHide;
     delete cleanProps.removeElement;
+    delete cleanProps.hideOnClickOutside;
 
     return (
       <div
@@ -122,6 +123,7 @@ Dropdown.propTypes = {
   active: PropTypes.bool,
   onHide: PropTypes.func,
   onShow: PropTypes.func,
+  hideOnClickOutside: PropTypes.func,
   children: PropTypes.node,
   className: PropTypes.string,
   removeElement: PropTypes.bool,
@@ -129,6 +131,7 @@ Dropdown.propTypes = {
 };
 
 Dropdown.defaultProps = {
+  hideOnClickOutside: () => true,
   className: ''
 };
 
